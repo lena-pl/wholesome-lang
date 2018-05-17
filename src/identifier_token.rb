@@ -1,9 +1,13 @@
-class IdentiferToken < Token
+require_relative "token"
+
+class IdentifierToken < Token
+  attr_reader :value
+
   def initialize(value)
-    @val = value
+    @value = value
   end
 
   def print
-    "Identifier(#{@val})"
+    "Identifier(#{value})"
   end
 end

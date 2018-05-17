@@ -1,9 +1,13 @@
+require_relative "token"
+
 class LiteralToken < Token
+  attr_reader :value
+
   def initialize(value)
-    @val = value
+    @value = value
   end
 
   def print
-    "Literal(#{@val})"
+    "Literal(#{value})"
   end
 end

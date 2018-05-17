@@ -1,3 +1,5 @@
+require_relative "../wholesome-lang.rb"
+
 class Parser
   def initialize(tokens)
     @tokens = tokens

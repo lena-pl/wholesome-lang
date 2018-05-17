@@ -1,3 +1,5 @@
+require_relative "../wholesome-lang.rb"
+
 class Tokeniser
   attr_reader :chars
 
@@ -25,6 +27,7 @@ class Tokeniser
       if in_a_literal
       elsif SEPERATORS.include?(current_letter)
         @tokens << identify_token(current_token)
+
         current_token = ""
         current_letter = ""
       end
@@ -32,14 +35,14 @@ class Tokeniser
       current_token += current_letter if current_letter
     end
 
-    puts @tokens.map(&:print).join("\n")
+    @tokens
   end
 
   def identify_token(w)
     if /\".*\"/.match(w)
       return LiteralToken.new(w)
     elsif /.*/.match(w)
-      return IdentiferToken.new(w)
+      return IdentifierToken.new(w)
     end
   end
 end
