@@ -39,8 +39,9 @@ class Tokeniser
   end
 
   def identify_token(w)
-    if /\".*\"/.match(w)
-      return LiteralToken.new(w)
+    if /\"(.*)\"/.match(w)
+      match = /\"(.*)\"/.match(w)
+      return LiteralToken.new(match[1])
     elsif /.*/.match(w)
       return IdentifierToken.new(w)
     end
