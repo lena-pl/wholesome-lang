@@ -1,10 +1,29 @@
+require_relative "./identifier_token.rb"
+require_relative "./literal_token.rb" 
+
 class ASTNode
 end
 
 class FunctionCallNode < ASTNode
   def initialize(identifier, parameters = [])
     @identifier = identifier
-    @paramters = parameters
+    @parameters = parameters
+  end
+
+  def to_s
+    parameters = @parameters.map(&:print).join(",")
+    "FunctionCall(#{@identifier}, args: [#{parameters}])"
+  end
+end
+
+class AssignmentNode < ASTNode
+  def initialize(identifier, val) 
+    @identifier = identifier
+    @val = val
+  end
+
+  def to_s
+    "Assignment(#{@identifier}, #{@val})"
   end
 end
 
@@ -24,24 +43,51 @@ class Parser
   private
 
   def parse_program
-  	@ast << parse_statement
+    while @current < @tokens.length
+      st = parse_statement
+      # puts st.print
+      @ast << st
+    end
+
+    @ast
   end
 
   def parse_statement
-  	parse_call
+    if identifier = accept(IdentifierToken)
+      if accept(AssignmentToken)
+        return AssignmentNode.new(identifier, parse_expression)
+      else
+        return parse_call(identifier)
+      end
+    else
+      raise "Syntax error, unexpected: #{@tokens[@current]}"
+    end
   end
 
-  def parse_call
-  	token = expect(IdentifierToken)
+  def parse_expression
+    expect(LiteralToken)
+  end
 
-  	FunctionCallNode.new(token.value)
+  def parse_call(identifier)
+  	FunctionCallNode.new(identifier)
+  end
+
+  def accept(token)
+    current_peek = @tokens[@current]
+    @current += 1
+
+    if current_peek.class == token
+      current_peek 
+    else
+      nil
+    end
   end
 
   def expect(token)
-  	current_peek = @tokens[@current]
-  	@current += 1
+  	current_peek = accept(token)
 
-  	return current_peek if current_peek.class == token
-  	return nil
+    return current_peek if current_peek
+  	
+    raise "Expected #{token} got #{current_peek.class}"
   end
 end

@@ -3,10 +3,12 @@ class Tokeniser
 
   SEPERATORS = [" ", nil, "\n"]
   LITERAL_SIGNIFIER = '"'
+  ASSIGNMENT = "="
 
   TOKENS = [
+    AssignmentToken,
     LiteralToken,
-    IdentifierToken
+    IdentifierToken,
   ]
 
   def initialize(source)

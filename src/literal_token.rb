@@ -1,5 +1,3 @@
-require_relative "../wholesome-lang.rb"
-
 class LiteralToken < Token
   EXPRESSION = /\"(.*)\"/
 
@@ -7,7 +5,7 @@ class LiteralToken < Token
     @value = value
   end
 
-  def print
+  def to_s
     "Literal(#{value})"
   end
 

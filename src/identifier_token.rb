@@ -1,5 +1,3 @@
-require_relative "../wholesome-lang.rb"
-
 class IdentifierToken < Token
   EXPRESSION = /.*/
 
@@ -7,7 +5,7 @@ class IdentifierToken < Token
     @value = value
   end
 
-  def print
+  def to_s
     "Identifier(#{value})"
   end
 
