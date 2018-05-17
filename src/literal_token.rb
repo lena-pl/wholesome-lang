@@ -1,4 +1,4 @@
-require_relative "token"
+require_relative "../wholesome-lang.rb"
 
 class LiteralToken < Token
   attr_reader :value
