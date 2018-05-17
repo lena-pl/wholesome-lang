@@ -6,6 +6,11 @@ class Tokeniser
   SEPERATORS = [" ", nil, "\n"]
   LITERAL_SIGNIFIER = '"'
 
+  TOKENS = [
+    LiteralToken,
+    IdentifierToken
+  ]
+
   def initialize(source)
     @source = source
     @chars = source.chars
@@ -38,12 +43,12 @@ class Tokeniser
     @tokens
   end
 
-  def identify_token(w)
-    if /\"(.*)\"/.match(w)
-      match = /\"(.*)\"/.match(w)
-      return LiteralToken.new(match[1])
-    elsif /.*/.match(w)
-      return IdentifierToken.new(w)
+  def identify_token(unknown_token)
+    TOKENS.reduce(nil) do |parsed_token, token_class|
+      return parsed_token unless parsed_token.nil?
+
+      match = token_class.const_get("EXPRESSION").match(unknown_token)
+      token_class.from(match) if match
     end
   end
 end
