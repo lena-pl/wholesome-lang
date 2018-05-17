@@ -1,1 +1,5 @@
-Dir["./src/*.rb"].each { |file| require file }
+require "./src/token"
+require "./src/identifier_token"
+require "./src/literal_token"
+require "./src/parser"
+require "./src/tokeniser"
