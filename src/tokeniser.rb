@@ -1,27 +1,4 @@
-class Token
-end
-
-class LiteralToken < Token
-  def initialize(value)
-    @val = value
-  end
-
-  def print
-    "Literal(#{@val})"
-  end
-end
-
-class IdentiferToken < Token
-  def initialize(value)
-    @val = value
-  end
-
-  def print
-    "Identifier(#{@val})"
-  end
-end
-
-class TokeniserService
+class Tokeniser
   attr_reader :chars
 
   SEPERATORS = [" ", nil, "\n"]
@@ -66,19 +43,3 @@ class TokeniserService
     end
   end
 end
-
-class ParserService
-  def initialize(tokens)
-    @tokens = tokens
-  end
-
-  def call
-  end
-end
-
-program = <<~EOS
-  psst "Hello, from Wholesomelang"
-EOS
-
-tokens = TokeniserService.new(program).call
-ast = ParserService.new(tokens).call
