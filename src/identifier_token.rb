@@ -3,8 +3,6 @@ require_relative "../wholesome-lang.rb"
 class IdentifierToken < Token
   EXPRESSION = /.*/
 
-  attr_reader :value
-
   def initialize(value)
     @value = value
   end

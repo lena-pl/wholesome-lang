@@ -1,4 +1,5 @@
-require_relative "../wholesome-lang.rb"
-
 class Token
+  def value
+    @value
+  end
 end

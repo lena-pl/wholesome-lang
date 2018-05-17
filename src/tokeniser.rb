@@ -1,5 +1,3 @@
-require_relative "../wholesome-lang.rb"
-
 class Tokeniser
   attr_reader :chars
 
