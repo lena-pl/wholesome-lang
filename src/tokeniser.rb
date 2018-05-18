@@ -1,15 +1,9 @@
-require_relative "../wholesome-lang.rb"
-
 class Tokeniser
   attr_reader :chars
 
   SEPERATORS = [" ", nil, "\n"]
   LITERAL_SIGNIFIER = '"'
-
-  TOKENS = [
-    LiteralToken,
-    IdentifierToken
-  ]
+  ASSIGNMENT = "="
 
   def initialize(source)
     @source = source
@@ -44,7 +38,7 @@ class Tokeniser
   end
 
   def identify_token(unknown_token)
-    TOKENS.reduce(nil) do |parsed_token, token_class|
+    Token.descendants.reduce(nil) do |parsed_token, token_class|
       return parsed_token unless parsed_token.nil?
 
       match = token_class.const_get("EXPRESSION").match(unknown_token)
