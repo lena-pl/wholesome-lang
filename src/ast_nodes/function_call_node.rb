@@ -16,6 +16,17 @@ class FunctionCallNode < ASTBase
   end
 
   def execute(context)
-    puts "¯\\_(ツ)_/¯"
+  	identifier = children_of_type(IdentifierToken).first
+  	arguments = @children - [identifier]
+
+    function = context.find_function(identifier.value)
+    raise "Unknown function `#{identifier.value}` called - aw heck" unless function
+
+    if function.respond_to?(:call)
+    	function.call(context, arguments.map(&:value))
+    else
+    	raise "We don't have wholelang functions yet"
+    end
+
   end
 end

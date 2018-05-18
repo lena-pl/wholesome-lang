@@ -6,17 +6,18 @@ require "./src/parser"
 require "./src/tokeniser"
 require "./src/context"
 
-example_program = <<~EOS
-  greeting_from = "Wholesomelang"
-  psst "Hello, from {{greeting_from}}"
-EOS
+filename = ARGV.last
+source = File.open(filename).read
 
-tokens  = Tokeniser.new(example_program).call
+tokens  = Tokeniser.new(source).call
 tree    = Parser.new(tokens).call
+context = Context.new
+
+tree.execute(context)
 
 if ARGV.include?("--dump-source") || ARGV.include?("-s")
 	puts "Source:"
-	puts example_program
+	puts source
 	puts
 end
 
@@ -34,8 +35,6 @@ end
 
 if ARGV.include?("--dump-context") || ARGV.include?("-c")
 	puts "Context:"
-  context = Context.new
-  tree.execute(context)
-  puts context.content
+  puts context.variables
   puts
 end
