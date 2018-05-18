@@ -9,7 +9,7 @@ class ASTBase
     raise "Not implemented"
   end
 
-  def execute
+  def execute(context)
     raise "Not implemented"
   end
 
