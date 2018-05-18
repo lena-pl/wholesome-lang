@@ -9,6 +9,11 @@ class IdentifierToken < Token
     "Identifier(#{value})"
   end
 
+  def debug_print(level)
+    pad = "\t" * level
+    "#{pad}#{to_s}"
+  end
+
   def self.from(token_match)
     new(token_match[0])
   end

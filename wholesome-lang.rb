@@ -27,6 +27,6 @@ end
 
 if ARGV.include?("--dump-tree") || ARGV.include?("-d")
 	puts "AST:"
-  puts tree
+  puts tree.debug_print(0)
   puts
 end
