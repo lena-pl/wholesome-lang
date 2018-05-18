@@ -37,7 +37,6 @@ class Context
   		end
 
   		puts output
-
   	end 
   end
 end

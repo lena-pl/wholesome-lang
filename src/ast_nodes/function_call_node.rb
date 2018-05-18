@@ -25,8 +25,7 @@ class FunctionCallNode < ASTBase
     if function.respond_to?(:call)
     	function.call(context, arguments.map(&:value))
     else
-    	raise "We don't have wholelang functions yet"
+			raise "We don't have wholesomelang functions yet"
     end
-
   end
 end

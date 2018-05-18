@@ -34,6 +34,8 @@ class Tokeniser
       current_token += current_letter if current_letter
     end
 
+    @tokens << identify_token(current_token)
+
     @tokens
   end
 
