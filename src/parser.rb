@@ -1,39 +1,8 @@
 require_relative "./identifier_token.rb"
 require_relative "./literal_token.rb"
-
-class ASTNode
-  attr_reader :children
-
-  def initialize(children)
-    @children = children
-  end
-
-  def execute
-    raise "Not implemented"
-  end
-end
-
-# rude node
-# parenthesis (one arg or till end of parenthesis)
-# override execute in each node to do a thing
-
-class RootNode < ASTNode
-  def to_s
-    puts children
-  end
-end
-
-class FunctionCallNode < ASTNode
-  def to_s
-    "FunctionCall(#{@children}, args: [#{children}])"
-  end
-end
-
-class AssignmentNode < ASTNode
-  def to_s
-    "Assignment(#{@children}, #{@children})"
-  end
-end
+require_relative "./ast_nodes/assignment_node.rb"
+require_relative "./ast_nodes/function_call_node.rb"
+require_relative "./ast_nodes/root_node.rb"
 
 class Parser
   def initialize(tokens)
