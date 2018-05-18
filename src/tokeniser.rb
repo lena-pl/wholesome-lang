@@ -5,12 +5,6 @@ class Tokeniser
   LITERAL_SIGNIFIER = '"'
   ASSIGNMENT = "="
 
-  TOKENS = [
-    AssignmentToken,
-    LiteralToken,
-    IdentifierToken,
-  ]
-
   def initialize(source)
     @source = source
     @chars = source.chars
@@ -44,7 +38,7 @@ class Tokeniser
   end
 
   def identify_token(unknown_token)
-    TOKENS.reduce(nil) do |parsed_token, token_class|
+    Token.descendants.reduce(nil) do |parsed_token, token_class|
       return parsed_token unless parsed_token.nil?
 
       match = token_class.const_get("EXPRESSION").match(unknown_token)
