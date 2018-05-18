@@ -16,6 +16,6 @@ class FunctionCallNode < ASTBase
   end
 
   def execute(context)
-    puts "¯\_(ツ)_/¯"
+    puts "¯\\_(ツ)_/¯"
   end
 end
