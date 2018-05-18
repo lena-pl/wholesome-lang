@@ -1,5 +1,7 @@
 require_relative "./identifier_token.rb"
 require_relative "./literal_token.rb"
+require_relative "./argument_list_tokens.rb"
+require_relative "./argument_list_tokens.rb"
 require_relative "./ast_nodes/assignment_node.rb"
 require_relative "./ast_nodes/function_call_node.rb"
 require_relative "./ast_nodes/root_node.rb"
@@ -43,14 +45,25 @@ class Parser
   end
 
   def parse_call(identifier)
-    FunctionCallNode.new([identifier])
+    arguments = []
+
+    if accept(StartArgumentListToken)
+      while next_argument != accept(LiteralToken)
+        arguments << next_argument
+      end
+    else
+      arguments = [expect(LiteralToken)]
+    end
+
+    FunctionCallNode.new([identifier] + arguments)
   end
 
   def accept(token)
     current_peek = @tokens[@current]
-    @current += 1
+    
 
     if current_peek.class == token
+      @current += 1
       current_peek
     else
       nil
@@ -62,6 +75,6 @@ class Parser
 
     return current_peek if current_peek
 
-    raise "Expected #{token} got #{current_peek.class}"
+    raise "Expected #{token} got #{current_peek.class}, previous was: #{@tokens[@current-1].class}"
   end
 end
