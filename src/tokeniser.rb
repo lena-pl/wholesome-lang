@@ -6,8 +6,8 @@ class Tokeniser
   ASSIGNMENT = "="
 
   def initialize(source)
-    @source = source
-    @chars = source.chars
+    @source = source.strip.chomp
+    @chars = @source.chars
     @tokens = []
   end
 
