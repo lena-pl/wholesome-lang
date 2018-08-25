@@ -5,8 +5,9 @@ class Tokeniser
   LITERAL_SIGNIFIER = '"'
   ASSIGNMENT = "="
 
-  def initialize(source)
+  def initialize(source, dictionary)
     @source = source.strip.chomp
+    @dictionary = dictionary
     @chars = @source.chars
     @tokens = []
   end
@@ -40,6 +41,12 @@ class Tokeniser
   end
 
   def identify_token(unknown_token)
+    unknown_token.split.each do |word|
+      if @dictionary.include?(word.downcase.tr('\"', '').tr('.','').tr(',','').tr('}','').tr('{',''))
+        raise "CRITICAL RUDE: source code not wholesome"
+      end
+    end
+
     Token.descendants.reduce(nil) do |parsed_token, token_class|
       return parsed_token unless parsed_token.nil?
 
