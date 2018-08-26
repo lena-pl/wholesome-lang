@@ -1,9 +1,13 @@
+# frozen_string_literal: true
+
+require 'byebug'
+
 class Tokeniser
   attr_reader :chars
 
-  SEPERATORS = [" ", nil, "\n"]
-  LITERAL_SIGNIFIER = '"'
-  ASSIGNMENT = "="
+  SEPERATORS = [' ', nil, "\n"].freeze
+  LITERAL_SIGNIFIER = '"'.freeze
+  ASSIGNMENT = '='.freeze
 
   def initialize(source, dictionary)
     @source = source.strip.chomp
@@ -13,23 +17,21 @@ class Tokeniser
   end
 
   def call
-    current_token = ""
+    current_token = ''
 
     in_a_literal = false
 
     @chars.length.times do
       current_letter = chars.shift
 
-      if current_letter == LITERAL_SIGNIFIER
-        in_a_literal = !in_a_literal
-      end
+      in_a_literal = !in_a_literal if current_letter == LITERAL_SIGNIFIER
 
       if in_a_literal
       elsif SEPERATORS.include?(current_letter)
         @tokens << identify_token(current_token)
 
-        current_token = ""
-        current_letter = ""
+        current_token = ''
+        current_letter = ''
       end
 
       current_token += current_letter if current_letter
@@ -43,7 +45,7 @@ class Tokeniser
   def identify_token(unknown_token)
     unknown_token.split.each do |word|
       if @dictionary.include?(word.downcase.tr('\"', '').tr('.','').tr(',','').tr('}','').tr('{',''))
-        raise "CRITICAL RUDE: source code not wholesome"
+        raise 'CRITICAL RUDE: source code not wholesome'
       end
     end
 

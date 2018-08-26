@@ -6,11 +6,11 @@ class ASTBase
   end
 
   def debug_print
-    raise "Not implemented"
+    raise 'Not implemented'
   end
 
   def execute(context)
-    raise "Not implemented"
+    raise 'Not implemented'
   end
 
   def children_of_type(type)

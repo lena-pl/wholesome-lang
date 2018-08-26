@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Token
   def value
     @value

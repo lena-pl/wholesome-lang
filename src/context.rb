@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Context
   attr_reader :variables
 
@@ -13,30 +15,30 @@ class Context
   end
 
   def fetch_variable(name)
-  	@variables[name.to_sym]
+    @variables[name.to_sym]
   end
 
   def find_function(name)
-  	@functions[name]
+    @functions[name]
   end
 
   def define_function(name, root_node)
   end
 
   def define_native_function(name, &block)
-  	@functions[name] = block
+    @functions[name] = block
   end
 
   private
 
   def setup_hacks
-  	define_native_function("psst") do |context, parameters|
-  		output = parameters.map do |p|
-  			variable = p.match(/{{(.*)}}/)[1]
-  			p.gsub(/{{.*}}/, context.fetch_variable(variable))
-  		end
+    define_native_function('psst') do |context, parameters|
+      output = parameters.map do |p|
+        variable = p.match(/{{(.*)}}/)[1]
+        p.gsub(/{{.*}}/, context.fetch_variable(variable))
+      end
 
-  		puts output
-  	end 
+      puts output
+    end
   end
 end

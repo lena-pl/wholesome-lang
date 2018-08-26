@@ -1,10 +1,12 @@
-require_relative "./identifier_token.rb"
-require_relative "./literal_token.rb"
-require_relative "./argument_list_tokens.rb"
-require_relative "./argument_list_tokens.rb"
-require_relative "./ast_nodes/assignment_node.rb"
-require_relative "./ast_nodes/function_call_node.rb"
-require_relative "./ast_nodes/root_node.rb"
+# frozen_string_literal: true
+
+require_relative './identifier_token.rb'
+require_relative './literal_token.rb'
+require_relative './argument_list_tokens.rb'
+require_relative './argument_list_tokens.rb'
+require_relative './ast_nodes/assignment_node.rb'
+require_relative './ast_nodes/function_call_node.rb'
+require_relative './ast_nodes/root_node.rb'
 
 class Parser
   def initialize(tokens)
@@ -29,7 +31,9 @@ class Parser
   end
 
   def parse_statement
-    if identifier = accept(IdentifierToken)
+    identifier = accept(IdentifierToken)
+
+    if identifier
       if accept(AssignmentToken)
         return AssignmentNode.new([identifier, parse_expression])
       else
@@ -60,7 +64,6 @@ class Parser
 
   def accept(token)
     current_peek = @tokens[@current]
-    
 
     if current_peek.class == token
       @current += 1
