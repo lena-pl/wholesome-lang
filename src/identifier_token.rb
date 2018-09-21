@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 class IdentifierToken < Token
-  EXPRESSION = /.*/
+  EXPRESSION = /[^="].*[^"]$/
 
   def initialize(value)
     @value = value
