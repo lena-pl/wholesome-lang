@@ -9,10 +9,13 @@ require_relative './ast_nodes/function_call_node.rb'
 require_relative './ast_nodes/root_node.rb'
 
 class Parser
-  def initialize(tokens)
+  attr_reader :loud
+
+  def initialize(tokens, loud: false)
     @tokens = tokens
     @current = 0
     @ast = []
+    @loud = loud
   end
 
   def call
@@ -22,6 +25,12 @@ class Parser
   private
 
   def parse_program
+    if loud
+      puts "TOKENS:"
+      puts @tokens
+      puts "==============="
+    end
+
     while @current < @tokens.length
       st = parse_statement
       @ast << st
@@ -64,6 +73,12 @@ class Parser
 
   def accept(token)
     current_peek = @tokens[@current]
+
+    if loud
+      puts "current_peek = " + current_peek.to_s
+      puts "token = " + token.to_s
+      puts "---"
+    end
 
     if current_peek.class == token
       @current += 1

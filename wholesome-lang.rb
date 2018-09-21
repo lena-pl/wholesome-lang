@@ -30,33 +30,58 @@ dictionary = File.read(DICTIONARY_FILE)
 filename = ARGV.last
 source = File.open(filename).read
 
-if ARGV.include?('--dump-source') || ARGV.include?('-s')
-  puts 'Source:'
-  puts source
-  puts
-end
+if ARGV.include?('--failure-rate')
+  passes = 0
+  failures = 0
 
-tokens = Tokeniser.new(source, dictionary.split("\n")).call
+  100.times do
+    error = nil
 
-if ARGV.include?('--dump-tokens') || ARGV.include?('-t')
-  puts 'Token stream:'
-  puts tokens.map(&:to_s).join("\n")
-  puts
-end
+    begin
+      context = Context.new
+      tokens = Tokeniser.new(source, dictionary.split("\n")).call
+      tree = Parser.new(tokens, :loud => true).call
+      tree.execute(context)
+    rescue Exception => e
+      error = e
+    end
+    puts e if e
 
-tree = Parser.new(tokens).call
+    error.nil? ? passes+=1 : failures+=1
+  end
 
-if ARGV.include?('--dump-tree') || ARGV.include?('-d')
-  puts 'AST:'
-  puts tree.debug_print(0)
-  puts
-end
+  puts "Passes: #{passes}"
+  puts "Failures: #{failures}"
+else
 
-context = Context.new
-tree.execute(context)
+  if ARGV.include?('--dump-source') || ARGV.include?('-s')
+    puts 'Source:'
+    puts source
+    puts
+  end
 
-if ARGV.include?('--dump-context') || ARGV.include?('-c')
-  puts 'Context:'
-  puts context.variables
-  puts
+  tokens = Tokeniser.new(source, dictionary.split("\n")).call
+
+  if ARGV.include?('--dump-tokens') || ARGV.include?('-t')
+    puts 'Token stream:'
+    puts tokens.map(&:to_s).join("\n")
+    puts
+  end
+
+  tree = Parser.new(tokens).call
+
+  if ARGV.include?('--dump-tree') || ARGV.include?('-d')
+    puts 'AST:'
+    puts tree.debug_print(0)
+    puts
+  end
+
+  context = Context.new
+  tree.execute(context)
+
+  if ARGV.include?('--dump-context') || ARGV.include?('-c')
+    puts 'Context:'
+    puts context.variables
+    puts
+  end
 end
