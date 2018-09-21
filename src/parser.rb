@@ -2,8 +2,8 @@
 
 require_relative './identifier_token.rb'
 require_relative './literal_token.rb'
-require_relative './argument_list_tokens.rb'
-require_relative './argument_list_tokens.rb'
+require_relative './start_argument_list_token.rb'
+require_relative './assignment_token.rb'
 require_relative './ast_nodes/assignment_node.rb'
 require_relative './ast_nodes/function_call_node.rb'
 require_relative './ast_nodes/root_node.rb'
