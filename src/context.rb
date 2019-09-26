@@ -34,8 +34,9 @@ class Context
   def setup_hacks
     define_native_function('psst') do |context, parameters|
       output = parameters.map do |p|
-        variable = p.match(/{{(.*)}}/)[1]
-        p.gsub(/{{.*}}/, context.fetch_variable(variable))
+        variable = p.match(/{{(.*)}}/) {|m| m[1]}
+
+        variable ? p.gsub(/{{.*}}/, context.fetch_variable(variable)) : p
       end
 
       puts output
