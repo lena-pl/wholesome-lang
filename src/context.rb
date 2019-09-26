@@ -1,6 +1,9 @@
 # frozen_string_literal: true
 
+require_relative './native_functions.rb'
+
 class Context
+  include NativeFunctions
   attr_reader :variables
 
   def initialize(filename)
@@ -35,21 +38,6 @@ class Context
   attr_reader :filename
 
   def setup_hacks
-    define_native_function('psst') do |context, parameters|
-      output = parameters.map do |p|
-        variable = p.match(/{{(.*)}}/) {|m| m[1]}
-
-        variable ? p.gsub(/{{.*}}/, context.fetch_variable(variable)) : p
-      end
-
-      puts output
-    end
-
-    define_native_function('yikes') do |context, parameters|
-      puts "Yikes! #{parameters[0]}"
-      puts "Hecked up in:"
-      puts "#{filename}"
-      exit!
-    end
+    add_native_functions_to_scope
   end
 end
