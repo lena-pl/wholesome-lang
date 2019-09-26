@@ -30,6 +30,8 @@ dictionary = File.read(DICTIONARY_FILE)
 filename = ARGV.last
 source = File.open(filename).read
 
+context = Context.new(filename)
+
 if ARGV.include?('--failure-rate')
   passes = 0
   failures = 0
@@ -38,7 +40,6 @@ if ARGV.include?('--failure-rate')
     error = nil
 
     begin
-      context = Context.new
       tokens = Tokeniser.new(source, dictionary.split("\n")).call
       tree = Parser.new(tokens, :loud => true).call
       tree.execute(context)
@@ -76,7 +77,6 @@ else
     puts
   end
 
-  context = Context.new
   tree.execute(context)
 
   if ARGV.include?('--dump-context') || ARGV.include?('-c')

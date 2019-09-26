@@ -3,7 +3,8 @@
 class Context
   attr_reader :variables
 
-  def initialize
+  def initialize(filename)
+    @filename = filename
     @variables = {}
     @functions = {}
 
@@ -31,6 +32,8 @@ class Context
 
   private
 
+  attr_reader :filename
+
   def setup_hacks
     define_native_function('psst') do |context, parameters|
       output = parameters.map do |p|
@@ -40,6 +43,13 @@ class Context
       end
 
       puts output
+    end
+
+    define_native_function('yikes') do |context, parameters|
+      puts "Yikes! #{parameters[0]}"
+      puts "Hecked up in:"
+      puts "#{filename}"
+      exit!
     end
   end
 end
