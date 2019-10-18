@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 #!/usr/bin/env ruby
 
 require './src/token'
@@ -20,6 +21,29 @@ unless File.file?(DICTIONARY_FILE)
 
   `cd #{DICTIONARY_FOLDER}`
   `git pull`
+=======
+require "./src/token"
+require "./src/identifier_token"
+require "./src/literal_token"
+require "./src/assignment_token"
+require "./src/parser"
+require "./src/tokeniser"
+require "./src/context"
+
+example_program = <<~EOS
+  greeting_from = "Wholesomelang"
+  psst "Hello, from {{greeting_from}}"
+EOS
+
+tokens  = Tokeniser.new(example_program).call
+tree    = Parser.new(tokens).call
+
+if ARGV.include?("--dump-source") || ARGV.include?("-s")
+	puts "Source:"
+	puts example_program
+	puts
+end
+>>>>>>> Stashed changes
 
   ignored_files = ['README.md', 'USERS.md', 'LICENSE', '.', '..', '.git']
   files = Dir.entries(DICTIONARY_FOLDER) - ignored_files
@@ -86,4 +110,12 @@ else
     puts context.variables
     puts
   end
+end
+
+if ARGV.include?("--dump-context") || ARGV.include?("-c")
+	puts "Context:"
+  context = Context.new
+  tree.execute(context)
+  puts context.content
+  puts
 end

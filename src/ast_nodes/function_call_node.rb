@@ -17,6 +17,7 @@ class FunctionCallNode < ASTBase
   end
 
   def execute(context)
+<<<<<<< Updated upstream
     identifier = children_of_type(IdentifierToken).first
     arguments = @children - [identifier]
 
@@ -26,5 +27,8 @@ class FunctionCallNode < ASTBase
     raise "We don't have wholesomelang functions yet" unless function.respond_to?(:call)
 
     function.call(context, arguments.map(&:value))
+=======
+    puts "¯\_(ツ)_/¯"
+>>>>>>> Stashed changes
   end
 end

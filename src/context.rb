@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # frozen_string_literal: true
 
 require_relative './native_functions.rb'
@@ -39,5 +40,16 @@ class Context
 
   def setup_hacks
     add_native_functions_to_scope
+=======
+class Context
+  attr_reader :content
+
+  def initialize
+    @content = {}
+  end
+
+  def set_variable(name, value)
+    @content[name.to_sym] = value
+>>>>>>> Stashed changes
   end
 end

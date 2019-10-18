@@ -1,10 +1,16 @@
+<<<<<<< Updated upstream
 # frozen_string_literal: true
 
 require_relative './ast_base.rb'
+=======
+require_relative "./ast_base.rb"
+require "byebug"
+>>>>>>> Stashed changes
 
 class AssignmentNode < ASTBase
   attr_reader :identifier, :literal
 
+<<<<<<< Updated upstream
   def debug_print(level)
     identifier = children_of_type(IdentifierToken).first
     expression = @children - [identifier]
@@ -14,6 +20,8 @@ class AssignmentNode < ASTBase
     "#{pad}Assignment\n#{identifier.debug_print(level+1)}\n#{expression_string}\n"
   end
 
+=======
+>>>>>>> Stashed changes
   def to_s
     "Assignment(#{@children}, #{@children})"
   end

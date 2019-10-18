@@ -5,6 +5,7 @@ class ASTBase
     @children = children
   end
 
+<<<<<<< Updated upstream
   def debug_print
     raise 'Not implemented'
   end
@@ -15,5 +16,9 @@ class ASTBase
 
   def children_of_type(type)
     @children.select { |c| c.class == type }
+=======
+  def execute(context)
+    raise "Not implemented"
+>>>>>>> Stashed changes
   end
 end
