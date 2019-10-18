@@ -8,7 +8,7 @@ class LiteralToken < Token
   end
 
   def to_s
-    "Literal(#{value})"
+    "Literal(#{value}) #{{__LINE__}}"
   end
 
   def debug_print(level)

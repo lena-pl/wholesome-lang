@@ -11,6 +11,7 @@ module NativeFunctions
   def add_psst
     define_native_function('psst') do |context, parameters|
       output = parameters.map do |p|
+        byebug
         variable = p.match(/{{(.*)}}/) {|m| m[1]}
 
         variable ? p.gsub(/{{.*}}/, context.fetch_variable(variable)) : p

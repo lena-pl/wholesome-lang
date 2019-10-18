@@ -1,3 +1,5 @@
+#!/usr/bin/env ruby
+
 require './src/token'
 require './src/identifier_token'
 require './src/literal_token'
