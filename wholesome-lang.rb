@@ -28,6 +28,11 @@ end
 dictionary = File.read(DICTIONARY_FILE)
 
 filename = ARGV.last
+
+if filename.nil? || filename.strip.empty?
+  raise 'No .wl file provided for execution'
+end
+
 source = File.open(filename).read
 
 if ARGV.include?('--failure-rate')
