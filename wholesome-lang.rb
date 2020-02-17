@@ -19,8 +19,12 @@ if ARGV.include?('--help')
      --dump-tree         Step through every node via parser, calling debug_print before executing the wl file
      --dump-context      Print the variables from source after executing the wl file
   EOS
-
 else
+  filename = ARGV.last
+
+  if filename.nil? || filename.strip.empty?
+    raise 'No .wl file provided for execution'
+  end
 
   unless File.file?(DICTIONARY_FILE)
     unless File.directory?(DICTIONARY_FOLDER)
@@ -37,11 +41,6 @@ else
   end
 
   dictionary = File.read(DICTIONARY_FILE)
-  filename = ARGV.last
-
-  if filename.nil? || filename.strip.empty?
-    raise 'No .wl file provided for execution'
-  end
 
   source = File.open(filename).read
 
@@ -68,7 +67,6 @@ else
     puts "Passes: #{passes}"
     puts "Failures: #{failures}"
   else
-
     if ARGV.include?('--dump-source') || ARGV.include?('-s')
       puts 'Source:'
       puts source
