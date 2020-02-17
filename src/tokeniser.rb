@@ -5,6 +5,7 @@ require 'byebug'
 class Tokeniser
   attr_reader :chars
 
+  SPECIAL_CHARS = ['\"', '.', ',', '}', '{'].freeze
   SEPERATORS = [' ', nil, "\n"].freeze
   LITERAL_SIGNIFIER = '"'.freeze
   ASSIGNMENT = '='.freeze
@@ -44,9 +45,7 @@ class Tokeniser
 
   def identify_token(unknown_token)
     unknown_token.split.each do |word|
-      if @dictionary.include?(word.downcase.tr('\"', '').tr('.','').tr(',','').tr('}','').tr('{',''))
-        raise 'CRITICAL RUDE: source code not wholesome'
-      end
+      check_politeness(word)
     end
 
     Token.descendants.reduce(nil) do |parsed_token, token_class|
@@ -54,6 +53,12 @@ class Tokeniser
 
       match = token_class.const_get("EXPRESSION").match(unknown_token)
       token_class.from(match) if match
+    end
+  end
+
+  def check_politeness(word)
+    if @dictionary.include?(word.downcase.tr(SPECIAL_CHARS.join, ''))
+      raise 'CRITICAL RUDE: source code not wholesome'
     end
   end
 end
