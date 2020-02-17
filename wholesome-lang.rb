@@ -8,7 +8,7 @@ DICTIONARY_FILE = File.join(__dir__, DICTIONARY_FOLDER, 'dictionary.txt').freeze
 
 if ARGV.include?('--help')
   puts <<~EOS
-  usage: ruby wholesome-lang.rb <filename> [flags]
+  usage: ruby wholesome-lang.rb [flags] <filename>
 
   Here are the current wholesome-lang.rb flags:
 
