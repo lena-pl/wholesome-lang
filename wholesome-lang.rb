@@ -1,12 +1,5 @@
-$LOAD_PATH << './src'
+require './components'
 
-require 'token'
-require 'identifier_token'
-require 'literal_token'
-require 'assignment_token'
-require 'parser'
-require 'tokeniser'
-require 'context'
 require 'byebug'
 require 'optparse'
 
