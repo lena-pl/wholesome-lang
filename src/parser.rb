@@ -1,12 +1,17 @@
 # frozen_string_literal: true
+$LOAD_PATH << './src/ast_nodes'
 
-require_relative './identifier_token.rb'
-require_relative './literal_token.rb'
-require_relative './start_argument_list_token.rb'
-require_relative './assignment_token.rb'
-require_relative './ast_nodes/assignment_node.rb'
-require_relative './ast_nodes/function_call_node.rb'
-require_relative './ast_nodes/root_node.rb'
+# tokens
+require 'token'
+require 'identifier_token'
+require 'literal_token'
+require 'assignment_token'
+require 'start_argument_list_token'
+
+# ast nodes
+require 'assignment_node'
+require 'function_call_node'
+require 'root_node'
 
 class Parser
   attr_reader :loud
